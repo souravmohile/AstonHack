@@ -3,10 +3,6 @@
     padding: 0; 
 }
 
-canvas {  
-    display: block;
-}
-
 html, body {
     height: 100%;
     margin: 0;
@@ -15,6 +11,28 @@ html, body {
     align-items: center;
 }
   
-.container {
-    border: 1px solid black; /* Optional: Just to visualize the container */
+/* #canvas-container {
+    position: relative;
+    border: 1px solid black;
+} */
+
+/* canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    background-color: "#E0E0E0";
+} */
+
+#canvas-container {
+    position: relative;
+}
+
+canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: purple;
 }

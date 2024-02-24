@@ -16,13 +16,11 @@ let synths = {}
 
 notes.forEach(note => {
   // creates a separate synth for each note to avoid collisions
-
   const synth = new Tone.Synth().toDestination();
   synths[note] = synth;
 })
 
 // Canvas setup
-
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d"); // creates the canvas window
 
@@ -37,24 +35,21 @@ addEventListener("resize", () => {
 });
 
 // Objects
-
 class Player {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor(canvasCentreX, canvasCentreY) {
     this.width = 45;
     this.height = 45;
+    this.x = canvasCentreX - Math.floor(this.width / 2);
+    this.x = canvasCentreY - Math.floor(this.height / 2);
     this.frames = [img1, img2, img3]; // animation frames
     this.index = 0; // current index of frames array
   }
 
   draw() {
-    if(animationId % 20 === 0){
+    if (animationId % 20 === 0) {
       this.index = this.index+1 > 2 ? 0 : this.index+1; // cycles through 3 frames
     }
-    
     c.drawImage(this.frames[this.index], this.x, this.y, this.width, this.height); // draw the image on the canvas
-
   }
 
   update() { // this function is called every time the canvas refreshes
@@ -98,6 +93,10 @@ let gameOn = false;
 function setGameSize(canvas) {
   canvas.height = Math.max(minHeight, 0.75 * window.innerHeight); 
   canvas.width = Math.max(minHeight, 1.8 * canvas.height);
+  const rect = canvas.getBoundingClientRect();
+  canvas.centreX = rect.left + rect.width / 2
+  canvas.centreY = rect.top + rect.height / 2
+  console.log(canvas.centreX, canvas.centreY)
 }
 
 function spawnObstacles() {
@@ -194,7 +193,7 @@ const keyHandler = async (key) => {
 }
 
 function init() {
-  player = new Player(200, canvas.height / 2 - 200);
+  player = new Player(canvas.centreX, canvas.centreY);
   obstacles = [];
   score = 0;
 
@@ -207,7 +206,7 @@ function init() {
 addEventListener("keydown", (event) => {
 
   if(event.key == " " && gameOn == false){
-    init(); // start or restart game
+    init(canvas.centreX, canvas.centreY); // start or restart game
   } else if (gameOn == true) {
     keyHandler(event.key);
   }
