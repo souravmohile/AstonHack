@@ -24,16 +24,16 @@ notes.forEach(note => {
 // Canvas setup
 
 const canvas = document.querySelector("canvas");
-
 const c = canvas.getContext("2d"); // creates the canvas window
 
-// TODO: too big for some reason, need to fix
-canvas.height = window.innerHeight; 
-canvas.width = window.innerWidth;
+const minHeight = 500
+const minWidth = 1.8 * minHeight
+
+setGameSize(canvas, minWidth, minHeight);
+canvas.style.background = "#E0E0E0"; // for testing
 
 addEventListener("resize", () => {
-  canvas.height = window.innerHeight;
-  canvas.width = window.innerWidth;
+  setGameSize(canvas, minWidth, minHeight);
 });
 
 // Objects
@@ -94,6 +94,11 @@ let interval;
 let gameOn = false;
 
 // Functions + event listeners
+
+function setGameSize(canvas) {
+  canvas.height = Math.max(minHeight, 0.75 * window.innerHeight); 
+  canvas.width = Math.max(minHeight, 1.8 * canvas.height);
+}
 
 function spawnObstacles() {
   // const notes = ["C", "D", "E", "F", "G", "A", "B"];
