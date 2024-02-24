@@ -9,3 +9,14 @@ class Asset(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.image_path}"
+
+
+class Player(models.Model):
+    # p_id is determined by the user's cookie data (tbc)
+    player_id = models.CharField(max_length=64, primary_key=True)
+
+
+class HighScore(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    score = models.IntegerField(null=False, blank=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
