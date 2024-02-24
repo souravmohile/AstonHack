@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const cookieName = "pid"
-    let currCookie = getCookie()
-    if (!getCookie(cookieName)) {
+    const cookieName = "player_id"
+    let currCookie = getCookie(cookieName)
+    if (currCookie === null) {
         let newCookieVal = generatePlayerId()
-        document.cookie = `${cookieName}=${encodeURIComponent(newCookieVal)};max-age=${86400*365};path=/`
+        document.cookie = `${cookieName}=${encodeURIComponent(newCookieVal)};max-age=${86400*365}`
     }
 })
 
@@ -24,11 +24,7 @@ function getCookie(cookieName) {
 
 function generatePlayerId() {
     // generate all characters valid for a cookie string
-    const validChars = []
-    for (let i = 33; i <= 126; i++) {
-        if (i == 44 || i == 59) continue // don't include commas or semicolons
-        validChars.push(String.fromCharCode(i))
-    }
+    const validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let playerId = ""
     for (let i = 0; i < 64; i++) {
         const randomIdx = Math.floor(Math.random() * validChars.length)
